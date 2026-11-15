@@ -17,32 +17,34 @@ public class TraceabilityRepository {
 
   public List<String> findAnimalIdsByProduct(String productId) {
     String sql = """
-                SELECT DISTINCT p.animal_id
+                SELECT DISTINCT a.registration_number
                 FROM product_tray pt
-                JOIN part p ON p.tray_id = pt.tray_id
+                JOIN part p   ON p.tray_id = pt.tray_id
+                JOIN animal a ON a.animal_id = p.animal_id
                 WHERE pt.product_id = CAST(? AS INTEGER)
-                ORDER BY p.animal_id
+                ORDER BY a.registration_number
                 """;
     return jdbc.queryForList(sql, String.class, productId);
   }
 
-  public List<ProductRecord> findProductsByAnimal(String animalId) {
+  public List<ProductRecord> findProductsByAnimal(String registrationNumber) {
     String sql = """
-                SELECT DISTINCT pr.product_id, pr.product_type
-                FROM part p
+                SELECT DISTINCT pr.product_id, pr.name AS product_type
+                FROM animal a
+                JOIN part p          ON p.animal_id = a.animal_id
                 JOIN product_tray pt ON pt.tray_id = p.tray_id
                 JOIN product pr      ON pr.product_id = pt.product_id
-                WHERE p.animal_id = CAST(? AS INTEGER)
+                WHERE a.registration_number = ?
                 ORDER BY pr.product_id
                 """;
     return jdbc.query(sql,
         (rs, rowNum) -> new ProductRecord(rs.getString("product_id"), rs.getString("product_type")),
-        animalId);
+        registrationNumber);
   }
 
-  public boolean animalExists(String animalId) {
+  public boolean animalExists(String registrationNumber) {
     Integer count = jdbc.queryForObject(
-        "SELECT COUNT(*) FROM animal WHERE animal_id = CAST(? AS INTEGER)", Integer.class, animalId);
+        "SELECT COUNT(*) FROM animal WHERE registration_number = ?", Integer.class, registrationNumber);
     return count != null && count > 0;
   }
 

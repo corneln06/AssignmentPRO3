@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.grpc.server.service.GrpcService;
 import org.store.pro3assignment.generated.*;
-import org.store.pro3assignment.model.AnimalRecord;
 import org.store.pro3assignment.model.ProductRecord;
 
 import java.util.List;
@@ -69,15 +68,6 @@ public class GrpcsAnimalServer extends AnimalServiceGrpc.AnimalServiceImplBase
       responseStreamObserver.onError(Status.INVALID_ARGUMENT.withDescription(e.getMessage()).asRuntimeException());
     } catch (Exception e) {
       responseStreamObserver.onError(Status.NOT_FOUND.withDescription(e.getMessage()).asRuntimeException());
-    }
-  }
-  private static class AnimalMapper
-  {
-    static Animal toProto(AnimalRecord animalRecord){
-      return Animal.newBuilder()
-          .setAnimalId(animalRecord.id())
-          .setName(animalRecord.name())
-          .build();
     }
   }
 }
