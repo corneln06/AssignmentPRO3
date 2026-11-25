@@ -1,8 +1,8 @@
-package org.store.pro3assignment.repository;
+package org.store.pro3assignment.traceability;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.store.pro3assignment.model.ProductRecord;
+import org.store.pro3assignment.station3.model.ProductRecord;
 
 import java.util.List;
 

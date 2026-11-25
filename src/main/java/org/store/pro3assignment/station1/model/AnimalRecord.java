@@ -1,4 +1,4 @@
-package org.store.pro3assignment.model;
+package org.store.pro3assignment.station1.model;
 
 import java.time.LocalDate;
 

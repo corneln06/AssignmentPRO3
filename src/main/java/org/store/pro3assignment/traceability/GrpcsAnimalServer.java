@@ -1,4 +1,4 @@
-package org.store.pro3assignment.service;
+package org.store.pro3assignment.traceability;
 
 
 import io.grpc.Status;
@@ -7,18 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.grpc.server.service.GrpcService;
 import org.store.pro3assignment.generated.*;
-import org.store.pro3assignment.model.ProductRecord;
+import org.store.pro3assignment.station3.model.ProductRecord;
 
 import java.util.List;
 
 @GrpcService
 public class GrpcsAnimalServer extends AnimalServiceGrpc.AnimalServiceImplBase
 {
-  private final AnimalService animalService;
+  private final TraceabilityService traceabilityService;
   private static final Logger LOG = LoggerFactory.getLogger(GrpcsAnimalServer.class.getName());
 
-  public GrpcsAnimalServer(AnimalService animalService){
-    this.animalService = animalService;
+  public GrpcsAnimalServer(TraceabilityService traceabilityService){
+    this.traceabilityService = traceabilityService;
   }
   @Override
   public void getAnimalsByProduct(GetAnimalsByProductRequest request,
@@ -27,7 +27,7 @@ public class GrpcsAnimalServer extends AnimalServiceGrpc.AnimalServiceImplBase
       List<String> animalIds = null;
       try
       {
-        animalIds = animalService.getAnimalIdsByProduct(request.getProductId());
+        animalIds = traceabilityService.getAnimalIdsByProduct(request.getProductId());
       }
       catch (Exception e)
       {
@@ -52,7 +52,7 @@ public class GrpcsAnimalServer extends AnimalServiceGrpc.AnimalServiceImplBase
   public void getProductsByAnimal(GetProductsByAnimalRequest request,
       StreamObserver<GetProductsByAnimalResponse> responseStreamObserver) {
     try {
-      List<ProductRecord> records = animalService.getProductsByAnimal(request.getRegistrationNumber());
+      List<ProductRecord> records = traceabilityService.getProductsByAnimal(request.getRegistrationNumber());
 
       GetProductsByAnimalResponse.Builder builder = GetProductsByAnimalResponse.newBuilder();
       for (ProductRecord record : records) {

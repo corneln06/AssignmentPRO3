@@ -1,17 +1,16 @@
-package org.store.pro3assignment.service;
+package org.store.pro3assignment.traceability;
 
 import org.springframework.stereotype.Service;
-import org.store.pro3assignment.model.ProductRecord;
-import org.store.pro3assignment.repository.TraceabilityRepository;
+import org.store.pro3assignment.station3.model.ProductRecord;
 
 import java.util.List;
 
 @Service
-public class AnimalService
+public class TraceabilityService
 {
   private final TraceabilityRepository repository;
 
-  public AnimalService(TraceabilityRepository repository)
+  public TraceabilityService(TraceabilityRepository repository)
   {
     this.repository = repository;
   }

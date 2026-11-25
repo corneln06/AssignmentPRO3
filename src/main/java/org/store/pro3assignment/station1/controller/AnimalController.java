@@ -1,11 +1,11 @@
-package org.store.pro3assignment.controller;
+package org.store.pro3assignment.station1.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.store.pro3assignment.dto.AnimalRegistrationRequest;
-import org.store.pro3assignment.dto.AnimalResponse;
-import org.store.pro3assignment.service.AnimalRegistrationService;
+import org.store.pro3assignment.station1.dto.AnimalRegistrationRequest;
+import org.store.pro3assignment.station1.dto.AnimalResponse;
+import org.store.pro3assignment.station1.service.AnimalRegistrationService;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -13,11 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/animals")
-public class MainController {
+public class AnimalController
+{
 
   private final AnimalRegistrationService animalRegistrationService;
 
-  public MainController(AnimalRegistrationService animalRegistrationService) {
+  public AnimalController(AnimalRegistrationService animalRegistrationService) {
     this.animalRegistrationService = animalRegistrationService;
   }
 
